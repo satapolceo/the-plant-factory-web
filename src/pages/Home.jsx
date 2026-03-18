@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HomeFeatures from "../components/home/HomeFeatures";
 import HomeHero from "../components/home/HomeHero";
 import SiteHeader from "../components/layout/SiteHeader";
 import siteContent from "../data/siteContent";
@@ -84,10 +85,7 @@ export default function Home() {
           onSecondaryAction={() => scrollToSection("about")}
         />
 
-        <section id="about">
-          <h2>{siteContent.navItems[0].label}</h2>
-          <p>This section remains in place for the upcoming Home extraction batch.</p>
-        </section>
+        <HomeFeatures features={siteContent.features} sectionId="about" />
 
         <section id="subscription">
           <h2>{siteContent.navItems[1].label}</h2>
