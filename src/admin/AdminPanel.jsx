@@ -2,40 +2,27 @@ import React from "react";
 import adminSections from "./adminSections";
 import siteContent from "../data/siteContent";
 
-function getSectionSummary(sectionId, content) {
-  switch (sectionId) {
-    case "brand":
-      return `Brand name: ${content.brandName}`;
-    case "home-content":
-      return [
-        `Hero title: ${content.hero.title}`,
-        `Features: ${content.features.items.length} items`,
-        `Subscription plans: ${content.subscriptions.length}`,
-        `Products: ${content.products.length}`,
-        `Footer links: ${content.footer.links.length}`
-      ];
-    case "catalog":
-      return [
-        `Plans available: ${content.subscriptions.length}`,
-        `Products available: ${content.products.length}`,
-        `Featured subscription: ${
-          content.subscriptions.find((plan) => plan.featured)?.name ?? "None"
-        }`
-      ];
-    case "navigation":
-      return content.navItems.map((item) => `${item.id}: ${item.label}`);
-    case "system":
-      return [
-        `Legacy hero title mirror: ${content.heroTitle}`,
-        `Legacy hero subtitle mirror: ${content.heroSubtitle}`
-      ];
-    default:
-      return [];
-  }
+function getValueAtPath(source, path) {
+  return path.split(".").reduce((current, key) => current?.[key], source);
 }
 
 function renderValuePreview(value) {
   if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return "0 entries";
+    }
+
+    const firstItem = value[0];
+
+    if (typeof firstItem === "string") {
+      return `${value.length} entries: ${value.join(", ")}`;
+    }
+
+    if (firstItem && typeof firstItem === "object") {
+      const itemId = firstItem.id ?? firstItem.label ?? firstItem.name ?? "item";
+      return `${value.length} entries, first id: ${itemId}`;
+    }
+
     return `${value.length} entries`;
   }
 
@@ -46,33 +33,11 @@ function renderValuePreview(value) {
   return String(value);
 }
 
-function AdminSectionCard({ section, content }) {
-  const summary = getSectionSummary(section.id, content);
-
-  return (
-    <section aria-labelledby={`admin-section-${section.id}`}>
-      <h3 id={`admin-section-${section.id}`}>{section.label}</h3>
-      <p>{section.description}</p>
-
-      {Array.isArray(summary) ? (
-        <ul>
-          {summary.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>{summary}</p>
-      )}
-
-      <ul>
-        {section.dataKeys.map((key) => (
-          <li key={key}>
-            <strong>{key}</strong>: {renderValuePreview(content[key])}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
+function getGroupSummary(group, content) {
+  return group.contentPaths.map((path) => ({
+    path,
+    value: getValueAtPath(content, path)
+  }));
 }
 
 function AdminSectionNav({ sections }) {
@@ -89,20 +54,64 @@ function AdminSectionNav({ sections }) {
   );
 }
 
+function AdminGroupCard({ sectionId, group, content }) {
+  const rows = getGroupSummary(group, content);
+
+  return (
+    <section aria-labelledby={`admin-group-${sectionId}-${group.id}`}>
+      <h4 id={`admin-group-${sectionId}-${group.id}`}>{group.label}</h4>
+      <p>{group.description}</p>
+      <ul>
+        {rows.map((row) => (
+          <li key={row.path}>
+            <strong>{row.path}</strong>: {renderValuePreview(row.value)}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function AdminSectionCard({ section, content }) {
+  return (
+    <section aria-labelledby={`admin-section-${section.id}`}>
+      <h3 id={`admin-section-${section.id}`}>{section.label}</h3>
+      <p>{section.description}</p>
+      <p>
+        <strong>Section ID:</strong> {section.id}
+      </p>
+      <p>
+        <strong>Domain:</strong> {section.domain}
+      </p>
+      <p>
+        <strong>Content Paths:</strong> {section.contentPaths.join(", ")}
+      </p>
+
+      {section.groups.map((group) => (
+        <AdminGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
+      ))}
+    </section>
+  );
+}
+
 export default function AdminPanel() {
   return (
     <div>
       <section>
         <h2>Admin Panel</h2>
         <p>
-          Structured view of shared content sections for future admin editing, API mapping, and
-          control-layer integration.
+          Structured control map of shared content sections for future admin editing, API mapping,
+          and control-layer integration.
         </p>
         <p>Brand: {siteContent.brandName}</p>
       </section>
 
       <section>
         <h3>Admin Section Map</h3>
+        <p>
+          Each section now exposes stable ids, domain references, and explicit shared content
+          paths.
+        </p>
         <AdminSectionNav sections={adminSections} />
       </section>
 
