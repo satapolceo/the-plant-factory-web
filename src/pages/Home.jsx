@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HomeFeatures from "../components/home/HomeFeatures";
 import HomeHero from "../components/home/HomeHero";
+import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
 import siteContent from "../data/siteContent";
 
@@ -10,6 +11,7 @@ export default function Home() {
   const [currentView, setCurrentView] = useState("home");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [pendingPlan, setPendingPlan] = useState(null);
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -34,6 +36,12 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleSubscribeClick = (plan) => {
+    setPendingPlan(plan);
+    setCurrentView(currentUser ? "member" : "login");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
       <SiteHeader
@@ -52,7 +60,11 @@ export default function Home() {
         {currentView === "login" ? (
           <section className="home-panel">
             <h2>Login</h2>
-            <p>Member login will connect to the full account flow in a later batch.</p>
+            <p>
+              {pendingPlan
+                ? `Selected plan: ${pendingPlan.name}`
+                : "Member login will connect to the full account flow in a later batch."}
+            </p>
             <button type="button" className="home-panel__button" onClick={() => setCurrentView("home")}>
               Back to Home
             </button>
@@ -62,7 +74,11 @@ export default function Home() {
         {currentView === "member" ? (
           <section className="home-panel">
             <h2>Member</h2>
-            <p>Member dashboard remains out of scope for this header extraction batch.</p>
+            <p>
+              {pendingPlan
+                ? `Selected plan: ${pendingPlan.name}`
+                : "Member dashboard remains out of scope for this header extraction batch."}
+            </p>
             <button type="button" className="home-panel__button" onClick={() => setCurrentView("home")}>
               Back to Home
             </button>
@@ -87,10 +103,11 @@ export default function Home() {
 
         <HomeFeatures features={siteContent.features} sectionId="about" />
 
-        <section id="subscription">
-          <h2>{siteContent.navItems[1].label}</h2>
-          <p>This section remains in place for the upcoming Home extraction batch.</p>
-        </section>
+        <HomeSubscriptions
+          section={siteContent.subscriptionsSection}
+          plans={siteContent.subscriptions}
+          onSelectPlan={handleSubscribeClick}
+        />
 
         <section id="shop">
           <h2>{siteContent.navItems[2].label}</h2>

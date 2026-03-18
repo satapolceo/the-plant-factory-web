@@ -366,6 +366,193 @@ button {
   line-height: 1.65;
 }
 
+.home-subscriptions {
+  margin: 24px;
+  padding: 64px 48px;
+  border: 1px solid #d7f7d7;
+  border-radius: 24px;
+  background: #f3fbf4;
+}
+
+.home-subscriptions__intro {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.home-subscriptions__eyebrow {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: #2f8f2f;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.home-subscriptions__title {
+  margin: 20px 0 0;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.2;
+  color: #111827;
+}
+
+.home-subscriptions__subtitle {
+  max-width: 680px;
+  margin: 16px auto 0;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.home-subscriptions__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.home-subscriptions__card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-subscriptions__card:hover {
+  transform: translateY(-2px);
+  border-color: #2f8f2f;
+  box-shadow: 0 22px 46px rgba(47, 143, 47, 0.15);
+}
+
+.home-subscriptions__card--featured {
+  border-color: #2f8f2f;
+}
+
+.home-subscriptions__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 10px 16px;
+  background: #2f8f2f;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.home-subscriptions__image-wrap {
+  height: 224px;
+  overflow: hidden;
+}
+
+.home-subscriptions__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.home-subscriptions__card:hover .home-subscriptions__image {
+  transform: scale(1.06);
+}
+
+.home-subscriptions__content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 32px;
+}
+
+.home-subscriptions__plan-name {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #111827;
+}
+
+.home-subscriptions__plan-desc {
+  margin: 8px 0 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.home-subscriptions__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 24px 0;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.home-subscriptions__price {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #2f8f2f;
+}
+
+.home-subscriptions__price-suffix {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.home-subscriptions__benefits-heading {
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #111827;
+  text-transform: uppercase;
+}
+
+.home-subscriptions__benefits {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-subscriptions__benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.home-subscriptions__check {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: #2f8f2f;
+}
+
+.home-subscriptions__cta {
+  margin-top: 24px;
+  min-height: 56px;
+  border: 0;
+  border-radius: 14px;
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.home-subscriptions__cta:hover {
+  background: #2f8f2f;
+}
+
 .site-header__mobile-menu {
   padding: 8px 16px 16px;
   background: #ffffff;
@@ -415,6 +602,7 @@ h2 {
 
   section,
   .home-features,
+  .home-subscriptions,
   .home-hero {
     margin: 16px 0;
   }
@@ -466,6 +654,28 @@ h2 {
   .home-features__grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .home-subscriptions {
+    padding: 40px 20px;
+    border-radius: 20px;
+  }
+
+  .home-subscriptions__intro {
+    margin-bottom: 32px;
+  }
+
+  .home-subscriptions__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .home-subscriptions__content {
+    padding: 24px 20px;
+  }
+
+  .home-subscriptions__plan-name {
+    font-size: 1.55rem;
   }
 
   .home-hero__actions {
