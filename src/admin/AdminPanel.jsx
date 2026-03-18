@@ -1,10 +1,7 @@
 import React from "react";
 import adminSections from "./adminSections";
+import { getValueAtPath } from "../control/contentSelectors";
 import siteContent from "../data/siteContent";
-
-function getValueAtPath(source, path) {
-  return path.split(".").reduce((current, key) => current?.[key], source);
-}
 
 function renderValuePreview(value) {
   if (Array.isArray(value)) {

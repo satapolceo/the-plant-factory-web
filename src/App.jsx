@@ -2,29 +2,12 @@ import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import AdminPanel from "./admin/AdminPanel";
 import AIChatPanel from "./chat/AIChatPanel";
-
-function getIsAdminAccessEnabled() {
-  const searchParams = new URLSearchParams(window.location.search);
-
-  return window.location.hash === "#admin" || searchParams.get("panel") === "admin";
-}
+import { getAdminPanelId, resolveAdminAccessState, subscribeToAdminAccessChanges } from "./control/panelAccess";
 
 export default function App() {
-  const [isAdminAccessEnabled, setIsAdminAccessEnabled] = useState(getIsAdminAccessEnabled);
+  const [isAdminAccessEnabled, setIsAdminAccessEnabled] = useState(resolveAdminAccessState);
 
-  useEffect(() => {
-    const syncAdminAccess = () => {
-      setIsAdminAccessEnabled(getIsAdminAccessEnabled());
-    };
-
-    window.addEventListener("hashchange", syncAdminAccess);
-    window.addEventListener("popstate", syncAdminAccess);
-
-    return () => {
-      window.removeEventListener("hashchange", syncAdminAccess);
-      window.removeEventListener("popstate", syncAdminAccess);
-    };
-  }, []);
+  useEffect(() => subscribeToAdminAccessChanges(setIsAdminAccessEnabled), []);
 
   return (
     <div>
@@ -32,7 +15,7 @@ export default function App() {
       {isAdminAccessEnabled ? (
         <>
           <hr />
-          <div id="admin-panel">
+          <div id={getAdminPanelId()}>
             <AdminPanel />
           </div>
         </>

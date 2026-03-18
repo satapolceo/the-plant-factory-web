@@ -1,10 +1,7 @@
 import React from "react";
 import chatSections from "./chatSections";
+import { getValueAtPath } from "../control/contentSelectors";
 import siteContent from "../data/siteContent";
-
-function getValueAtPath(source, path) {
-  return path.split(".").reduce((current, key) => current?.[key], source);
-}
 
 function getTextPreview(value, maxLength = 120) {
   if (value == null) {

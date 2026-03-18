@@ -6,6 +6,7 @@ import HomeLab from "../components/home/HomeLab";
 import HomeShop from "../components/home/HomeShop";
 import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
+import { getAdminPanelId, requestAdminAccess } from "../control/panelAccess";
 import siteContent from "../data/siteContent";
 
 export default function Home() {
@@ -69,10 +70,10 @@ export default function Home() {
   const handleAdminOpen = () => {
     setCurrentView("home");
     setIsMobileMenuOpen(false);
-    window.location.hash = "admin";
+    requestAdminAccess();
 
     window.setTimeout(() => {
-      document.getElementById("admin-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(getAdminPanelId())?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 100);
   };
 
