@@ -6,12 +6,36 @@ function getValueAtPath(source, path) {
   return path.split(".").reduce((current, key) => current?.[key], source);
 }
 
-function renderValuePreview(path, value) {
-  if (path === "aiWidget.apiKey") {
+function getTextPreview(value, maxLength = 120) {
+  if (value == null) {
+    return "Not set";
+  }
+
+  const normalized = String(value).replace(/\s+/g, " ").trim();
+
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, maxLength)}...`;
+}
+
+function renderValuePreview(path, value, previewType = "auto") {
+  if (previewType === "sensitive" || path === "aiWidget.apiKey") {
     return value ? "Configured" : "Not configured";
   }
 
   if (Array.isArray(value)) {
+    if (previewType === "collection") {
+      if (value.length === 0) {
+        return "0 entries";
+      }
+
+      const firstItem = value[0];
+      const itemLabel = firstItem?.name ?? firstItem?.title ?? firstItem?.label ?? firstItem?.id ?? "item";
+      return `${value.length} entries, first item: ${itemLabel}`;
+    }
+
     if (value.length === 0) {
       return "0 entries";
     }
@@ -30,11 +54,32 @@ function renderValuePreview(path, value) {
     return `${value.length} entries`;
   }
 
+  if (previewType === "badge") {
+    return String(value ?? "Not set").toUpperCase();
+  }
+
+  if (previewType === "long-text") {
+    return getTextPreview(value, 160);
+  }
+
   if (value && typeof value === "object") {
     return `${Object.keys(value).length} fields`;
   }
 
+  if (typeof value === "string") {
+    return getTextPreview(value, 120);
+  }
+
+  if (value == null || value === "") {
+    return "Not set";
+  }
+
   return String(value);
+}
+
+function getPathCountSummary(content, paths) {
+  const resolvedValues = paths.map((path) => getValueAtPath(content, path)).filter(Boolean);
+  return `${resolvedValues.length}/${paths.length} mapped paths resolved`;
 }
 
 function ChatPanelNav({ sections }) {
@@ -51,16 +96,38 @@ function ChatPanelNav({ sections }) {
   );
 }
 
+function ChatFieldRow({ field, content }) {
+  const value = getValueAtPath(content, field.path);
+
+  return (
+    <li>
+      <strong>{field.label}</strong>
+      <div>Path: {field.path}</div>
+      <div>Preview: {renderValuePreview(field.path, value, field.preview)}</div>
+    </li>
+  );
+}
+
 function ChatGroupCard({ sectionId, group, content }) {
   return (
     <section aria-labelledby={`chat-group-${sectionId}-${group.id}`}>
       <h4 id={`chat-group-${sectionId}-${group.id}`}>{group.label}</h4>
       <p>{group.description}</p>
+      <p>
+        <strong>Group ID:</strong> {group.id}
+      </p>
+      <p>
+        <strong>Control Type:</strong> {group.controlType}
+      </p>
+      <p>
+        <strong>Content Domain:</strong> {group.contentDomain}
+      </p>
+      <p>
+        <strong>Path Coverage:</strong> {getPathCountSummary(content, group.contentPaths)}
+      </p>
       <ul>
-        {group.contentPaths.map((path) => (
-          <li key={path}>
-            <strong>{path}</strong>: {renderValuePreview(path, getValueAtPath(content, path))}
-          </li>
+        {group.fields.map((field) => (
+          <ChatFieldRow key={field.id} field={field} content={content} />
         ))}
       </ul>
     </section>
@@ -79,7 +146,10 @@ function ChatSectionCard({ section, content }) {
         <strong>Domain:</strong> {section.domain}
       </p>
       <p>
-        <strong>Content Paths:</strong> {section.contentPaths.join(", ")}
+        <strong>Mapped Paths:</strong> {section.contentPaths.join(", ")}
+      </p>
+      <p>
+        <strong>Groups:</strong> {section.groups.length}
       </p>
 
       {section.groups.map((group) => (
@@ -99,13 +169,15 @@ export default function AIChatPanel() {
           context references.
         </p>
         <p>Assistant: {siteContent.aiWidget.title}</p>
+        <p>Provider: {renderValuePreview("aiWidget.provider", siteContent.aiWidget.provider, "badge")}</p>
+        <p>Mapped sections: {chatSections.length}</p>
       </section>
 
       <section>
         <h3>AI Chat Section Map</h3>
         <p>
-          Each chat area now exposes stable ids, domain references, and explicit shared content
-          paths.
+          Each chat area exposes stable ids, domain references, group ids, and explicit shared
+          content paths for future control-layer integration.
         </p>
         <ChatPanelNav sections={chatSections} />
       </section>

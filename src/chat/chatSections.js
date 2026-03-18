@@ -10,7 +10,13 @@ const chatSections = [
         id: "assistant-title",
         label: "Assistant Identity",
         description: "Brand and assistant naming used in the chat experience.",
-        contentPaths: ["brandName", "aiWidget.title"]
+        controlType: "display-mapping",
+        contentDomain: "site-brand",
+        contentPaths: ["brandName", "aiWidget.title"],
+        fields: [
+          { id: "brand-name", label: "Brand Name", path: "brandName", preview: "text" },
+          { id: "assistant-title", label: "Assistant Title", path: "aiWidget.title", preview: "text" }
+        ]
       }
     ]
   },
@@ -25,13 +31,23 @@ const chatSections = [
         id: "provider-selection",
         label: "Provider Selection",
         description: "Current backend/provider selection for AI calls.",
-        contentPaths: ["aiWidget.provider"]
+        controlType: "config-preview",
+        contentDomain: "ai-widget-config",
+        contentPaths: ["aiWidget.provider"],
+        fields: [
+          { id: "provider", label: "Provider", path: "aiWidget.provider", preview: "badge" }
+        ]
       },
       {
         id: "api-credentials",
         label: "API Credentials",
         description: "Credential presence for future control and validation flows.",
-        contentPaths: ["aiWidget.apiKey"]
+        controlType: "sensitive-state",
+        contentDomain: "ai-widget-config",
+        contentPaths: ["aiWidget.apiKey"],
+        fields: [
+          { id: "api-key", label: "API Key", path: "aiWidget.apiKey", preview: "sensitive" }
+        ]
       }
     ]
   },
@@ -46,13 +62,23 @@ const chatSections = [
         id: "greeting",
         label: "Greeting",
         description: "Default first response shown by the assistant.",
-        contentPaths: ["aiWidget.greeting"]
+        controlType: "message-preview",
+        contentDomain: "ai-widget-copy",
+        contentPaths: ["aiWidget.greeting"],
+        fields: [
+          { id: "greeting", label: "Greeting Message", path: "aiWidget.greeting", preview: "long-text" }
+        ]
       },
       {
         id: "system-prompt",
         label: "System Prompt",
         description: "Core instruction text for future prompt-control surfaces.",
-        contentPaths: ["aiWidget.systemPrompt"]
+        controlType: "instruction-preview",
+        contentDomain: "ai-widget-copy",
+        contentPaths: ["aiWidget.systemPrompt"],
+        fields: [
+          { id: "system-prompt", label: "System Prompt", path: "aiWidget.systemPrompt", preview: "long-text" }
+        ]
       }
     ]
   },
@@ -67,13 +93,25 @@ const chatSections = [
         id: "home-context",
         label: "Home Context",
         description: "High-level public-facing content the assistant may reference.",
-        contentPaths: ["hero"]
+        controlType: "context-reference",
+        contentDomain: "website-home",
+        contentPaths: ["hero"],
+        fields: [
+          { id: "hero-title", label: "Hero Title", path: "hero.title", preview: "text" },
+          { id: "hero-subtitle", label: "Hero Subtitle", path: "hero.subtitle", preview: "long-text" }
+        ]
       },
       {
         id: "catalog-context",
         label: "Catalog Context",
         description: "Commerce collections available for recommendation and lookup.",
-        contentPaths: ["subscriptions", "products"]
+        controlType: "context-reference",
+        contentDomain: "website-catalog",
+        contentPaths: ["subscriptions", "products"],
+        fields: [
+          { id: "subscription-count", label: "Subscription Plans", path: "subscriptions", preview: "collection" },
+          { id: "product-count", label: "Products", path: "products", preview: "collection" }
+        ]
       }
     ]
   }
