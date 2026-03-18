@@ -1,0 +1,143 @@
+PROJECT: THE-PLANT-FACTORY-WEB
+
+GOAL
+- Build a website for Plant Factory / Hydroponic vegetables
+- Human-friendly for customers
+- AI-readable for future AI assistant, AI suggestions, and API/tool integration
+- Ready to expand into lead capture, quote requests, subscriptions, and ordering
+
+SITE MAP
+- /
+- /about
+- /solutions
+- /products
+- /products/:slug
+- /packages
+- /packages/:slug
+- /knowledge
+- /knowledge/:slug
+- /faq
+- /contact
+- /quote
+- /subscribe
+- /order
+- /policy
+
+AI-READABLE ROUTES
+- /ai/overview.json
+- /ai/products.json
+- /ai/packages.json
+- /ai/faq.json
+- /ai/knowledge.json
+- /ai/business-rules.json
+- /ai/service-areas.json
+
+API ROUTES
+- GET /api/products
+- GET /api/products/:slug
+- GET /api/packages
+- GET /api/packages/:slug
+- GET /api/faq
+- GET /api/knowledge
+- GET /api/business-rules
+- POST /api/leads
+- POST /api/quote-requests
+- POST /api/subscriptions
+- POST /api/orders
+- POST /api/delivery/check
+
+DATA SCHEMA
+1) products
+- id
+- slug
+- name_th
+- name_lo
+- name_en
+- category
+- short_description_th
+- short_description_lo
+- short_description_en
+- benefits
+- harvest_days
+- available_units
+- price
+- stock_status
+- subscription_available
+- featured
+- images
+
+2) packages
+- id
+- slug
+- name_th
+- name_lo
+- name_en
+- target_customer
+- description_th
+- billing_cycle
+- delivery_frequency
+- items_included
+- price
+- active
+
+3) faq
+- id
+- category
+- question_th
+- question_lo
+- question_en
+- answer_th
+- answer_lo
+- answer_en
+
+4) knowledge_articles
+- id
+- slug
+- title_th
+- title_lo
+- title_en
+- summary_th
+- content_th
+- content_lo
+- content_en
+- tags
+- published
+
+5) business_rules
+- currency
+- supported_languages
+- delivery_areas
+- minimum_order_amount
+- subscription_cancel_policy
+- quote_required_for_b2b
+- ai_actions_allowed
+
+6) leads
+- full_name
+- phone
+- email
+- preferred_language
+- customer_type
+- interest_type
+- message
+- source
+
+RECOMMENDED FOLDER STRUCTURE (NEXT PHASE)
+- public/
+- src/
+  - pages/
+  - components/
+  - data/
+  - lib/
+  - styles/
+  - App.jsx
+  - main.jsx
+
+PHASE ORDER
+1. Define project structure
+2. Add website content structure
+3. Add Git and GitHub
+4. Push first version
+5. Deploy test website
+6. Improve UI and AI-readable data layer
+7. Add API and action forms
