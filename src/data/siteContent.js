@@ -213,6 +213,15 @@ const siteContent = {
       actionKey: "open-admin",
       label: "Admin"
     }
+  },
+  aiWidget: {
+    sectionKey: "ai-widget",
+    provider: "gemini",
+    apiKey: "",
+    title: "Plant Factory AI",
+    greeting: "สวัสดีครับ มีผักหรือแพ็กเกจไหนที่อยากให้ช่วยแนะนำเป็นพิเศษไหมครับ",
+    systemPrompt:
+      "คุณคือผู้ช่วย AI ของ The Plant Factory ให้คำแนะนำเรื่องผักสลัด ระบบปลูกพืช และแพ็กเกจสมาชิกอย่างกระชับ สุภาพ และเข้าใจง่าย"
   }
 };
 
