@@ -30,16 +30,23 @@ function renderValuePreview(value) {
     return `${Object.keys(value).length} fields`;
   }
 
+  if (value == null || value === "") {
+    return "Not set";
+  }
+
   return String(value);
 }
 
 function AdminSectionNav({ sections }) {
   return (
-    <nav aria-label="Admin sections">
-      <ul>
+    <nav className="admin-panel__nav" aria-label="Admin sections">
+      <ul className="admin-panel__nav-list">
         {sections.map((section) => (
           <li key={section.id}>
-            <a href={`#admin-section-${section.id}`}>{section.label}</a>
+            <a className="admin-panel__nav-link" href={`#admin-section-${section.id}`}>
+              <span className="admin-panel__nav-label">{section.label}</span>
+              <span className="admin-panel__nav-id">{section.id}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -49,27 +56,36 @@ function AdminSectionNav({ sections }) {
 
 function AdminFieldRow({ field, value }) {
   return (
-    <li>
-      <strong>{field.label}</strong>
-      : {renderValuePreview(value)}
-      <br />
-      <small>{field.path}</small>
+    <li className="admin-panel__field-row">
+      <div className="admin-panel__field-topline">
+        <strong className="admin-panel__field-label">{field.label}</strong>
+        <span className="admin-panel__field-preview">{renderValuePreview(value)}</span>
+      </div>
+      <code className="admin-panel__field-path">{field.path}</code>
     </li>
   );
 }
 
 function AdminGroupCard({ sectionId, group, content }) {
   return (
-    <section aria-labelledby={`admin-group-${sectionId}-${group.id}`}>
-      <h4 id={`admin-group-${sectionId}-${group.id}`}>{group.label}</h4>
-      <p>{group.description}</p>
-      <p>
-        <strong>Group ID:</strong> {group.id}
-      </p>
-      <p>
-        <strong>Control Type:</strong> {group.controlType}
-      </p>
-      <ul>
+    <section className="admin-panel__group-card" aria-labelledby={`admin-group-${sectionId}-${group.id}`}>
+      <div className="admin-panel__group-head">
+        <div>
+          <h4 className="admin-panel__group-title" id={`admin-group-${sectionId}-${group.id}`}>
+            {group.label}
+          </h4>
+          <p className="admin-panel__group-description">{group.description}</p>
+        </div>
+        <span className="admin-panel__group-type">{group.controlType}</span>
+      </div>
+
+      <div className="admin-panel__group-meta">
+        <span>
+          <strong>Group ID:</strong> {group.id}
+        </span>
+      </div>
+
+      <ul className="admin-panel__field-list">
         {group.fields.map((field) => (
           <AdminFieldRow key={field.id} field={field} value={getValueAtPath(content, field.path)} />
         ))}
@@ -80,56 +96,87 @@ function AdminGroupCard({ sectionId, group, content }) {
 
 function AdminSectionCard({ section, content }) {
   return (
-    <section aria-labelledby={`admin-section-${section.id}`}>
-      <h3 id={`admin-section-${section.id}`}>{section.label}</h3>
-      <p>{section.description}</p>
-      <p>
-        <strong>Section ID:</strong> {section.id}
-      </p>
-      <p>
-        <strong>Domain:</strong> {section.domain}
-      </p>
-      <p>
-        <strong>Content Paths:</strong> {section.contentPaths.join(", ")}
-      </p>
-      <p>
-        <strong>Group Count:</strong> {section.groups.length}
-      </p>
+    <section className="admin-panel__section-card" aria-labelledby={`admin-section-${section.id}`}>
+      <div className="admin-panel__section-head">
+        <div>
+          <p className="admin-panel__eyebrow">{section.domain}</p>
+          <h3 className="admin-panel__section-title" id={`admin-section-${section.id}`}>
+            {section.label}
+          </h3>
+        </div>
+        <span className="admin-panel__section-id">{section.id}</span>
+      </div>
 
-      {section.groups.map((group) => (
-        <AdminGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
-      ))}
+      <p className="admin-panel__section-description">{section.description}</p>
+
+      <div className="admin-panel__meta-grid">
+        <div className="admin-panel__meta-card">
+          <span className="admin-panel__meta-label">Content Paths</span>
+          <span className="admin-panel__meta-value">{section.contentPaths.join(", ")}</span>
+        </div>
+        <div className="admin-panel__meta-card">
+          <span className="admin-panel__meta-label">Group Count</span>
+          <span className="admin-panel__meta-value">{section.groups.length}</span>
+        </div>
+      </div>
+
+      <div className="admin-panel__group-grid">
+        {section.groups.map((group) => (
+          <AdminGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
+        ))}
+      </div>
     </section>
   );
 }
 
 export default function AdminPanel() {
   return (
-    <div>
-      <section>
-        <h2>Admin Panel</h2>
-        <p>
-          Internal control surface for shared website content. Access is intentionally gated and
-          this panel maps section ids, content paths, and field groups for future automation.
-        </p>
-        <p>
-          <strong>Access Mode:</strong> internal hash/query entry (`#admin` or `?panel=admin`)
-        </p>
-        <p>Brand: {siteContent.brandName}</p>
-      </section>
+    <div className="admin-panel">
+      <div className="admin-panel__shell">
+        <section className="admin-panel__intro">
+          <p className="admin-panel__eyebrow">Internal Control Surface</p>
+          <h2 className="admin-panel__title">Admin Panel</h2>
+          <p className="admin-panel__lead">
+            Internal control surface for shared website content. Access is intentionally gated and
+            this panel maps section ids, content paths, and field groups for future automation.
+          </p>
 
-      <section>
-        <h3>Admin Section Map</h3>
-        <p>
-          Each section exposes stable ids, domains, control-group ids, and concrete shared content
-          paths.
-        </p>
-        <AdminSectionNav sections={adminSections} />
-      </section>
+          <div className="admin-panel__intro-meta">
+            <div className="admin-panel__intro-card">
+              <span className="admin-panel__meta-label">Access Mode</span>
+              <span className="admin-panel__meta-value">internal hash/query entry (#admin or ?panel=admin)</span>
+            </div>
+            <div className="admin-panel__intro-card">
+              <span className="admin-panel__meta-label">Brand</span>
+              <span className="admin-panel__meta-value">{siteContent.brandName}</span>
+            </div>
+            <div className="admin-panel__intro-card">
+              <span className="admin-panel__meta-label">Sections</span>
+              <span className="admin-panel__meta-value">{adminSections.length}</span>
+            </div>
+          </div>
+        </section>
 
-      {adminSections.map((section) => (
-        <AdminSectionCard key={section.id} section={section} content={siteContent} />
-      ))}
+        <section className="admin-panel__map">
+          <div className="admin-panel__map-head">
+            <div>
+              <p className="admin-panel__eyebrow">Navigation</p>
+              <h3 className="admin-panel__map-title">Admin Section Map</h3>
+            </div>
+            <p className="admin-panel__map-copy">
+              Stable ids, domains, control-group ids, and shared content paths stay visible for
+              maintainability and future control-layer integration.
+            </p>
+          </div>
+          <AdminSectionNav sections={adminSections} />
+        </section>
+
+        <div className="admin-panel__sections">
+          {adminSections.map((section) => (
+            <AdminSectionCard key={section.id} section={section} content={siteContent} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
