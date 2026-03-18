@@ -80,7 +80,7 @@ export default function Home({ onAdminOpen }) {
         onUserClick={handleUserClick}
         onMobileMenuToggle={() => setIsMobileMenuOpen((open) => !open)}
       />
-      <main>
+      <main className="site-home">
         {currentView === "login" ? (
           <section className="home-panel">
             <h2>Login</h2>
