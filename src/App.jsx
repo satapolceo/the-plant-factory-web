@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import AdminPanel from "./admin/AdminPanel";
 import AIChatPanel from "./chat/AIChatPanel";
-import { getAdminPanelId, resolveAdminAccessState, subscribeToAdminAccessChanges } from "./control/panelAccess";
+import { getAdminPanelId } from "./control/panelAccess";
+import { resolveSurfaceRenderState, subscribeToSurfaceStateChanges } from "./control/viewState";
 
 export default function App() {
-  const [isAdminAccessEnabled, setIsAdminAccessEnabled] = useState(resolveAdminAccessState);
+  const [surfaceState, setSurfaceState] = useState(resolveSurfaceRenderState);
 
-  useEffect(() => subscribeToAdminAccessChanges(setIsAdminAccessEnabled), []);
+  useEffect(() => subscribeToSurfaceStateChanges(setSurfaceState), []);
 
   return (
     <div>
-      <Home />
-      {isAdminAccessEnabled ? (
+      {surfaceState.showWebsite ? <Home /> : null}
+      {surfaceState.showAdmin ? (
         <>
           <hr />
           <div id={getAdminPanelId()}>
@@ -20,8 +21,12 @@ export default function App() {
           </div>
         </>
       ) : null}
-      <hr />
-      <AIChatPanel />
+      {surfaceState.showChat ? (
+        <>
+          <hr />
+          <AIChatPanel />
+        </>
+      ) : null}
     </div>
   );
 }

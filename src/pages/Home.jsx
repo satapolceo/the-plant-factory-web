@@ -7,20 +7,25 @@ import HomeShop from "../components/home/HomeShop";
 import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
 import { getAdminPanelId, requestAdminAccess } from "../control/panelAccess";
+import { getDefaultHomeView, isViewActive, resolveAccountEntryView, HOME_VIEW_KEYS } from "../control/viewState";
 import siteContent from "../data/siteContent";
 
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [currentUser] = useState(null);
-  const [currentView, setCurrentView] = useState("home");
+  const [currentView, setCurrentView] = useState(getDefaultHomeView);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [pendingPlan, setPendingPlan] = useState(null);
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  const resetToHomeView = () => {
+    setCurrentView(getDefaultHomeView());
+  };
+
   const scrollToSection = (sectionId) => {
-    setCurrentView("home");
+    resetToHomeView();
     setIsMobileMenuOpen(false);
 
     window.setTimeout(() => {
@@ -29,20 +34,20 @@ export default function Home() {
   };
 
   const handleLogoClick = () => {
-    setCurrentView("home");
+    resetToHomeView();
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleUserClick = () => {
     setIsMobileMenuOpen(false);
-    setCurrentView(currentUser ? "member" : "login");
+    setCurrentView(resolveAccountEntryView(currentUser));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSubscribeClick = (plan) => {
     setPendingPlan(plan);
-    setCurrentView(currentUser ? "member" : "login");
+    setCurrentView(resolveAccountEntryView(currentUser));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -68,7 +73,7 @@ export default function Home() {
   };
 
   const handleAdminOpen = () => {
-    setCurrentView("home");
+    resetToHomeView();
     setIsMobileMenuOpen(false);
     requestAdminAccess();
 
@@ -92,7 +97,7 @@ export default function Home() {
         onMobileMenuToggle={() => setIsMobileMenuOpen((open) => !open)}
       />
       <main className="site-home">
-        {currentView === "login" ? (
+        {isViewActive(currentView, HOME_VIEW_KEYS.LOGIN) ? (
           <section className="home-panel">
             <h2>Login</h2>
             <p>
@@ -100,13 +105,13 @@ export default function Home() {
                 ? `Selected plan: ${pendingPlan.name}`
                 : "Member login will connect to the full account flow in a later batch."}
             </p>
-            <button type="button" className="home-panel__button" onClick={() => setCurrentView("home")}>
+            <button type="button" className="home-panel__button" onClick={resetToHomeView}>
               Back to Home
             </button>
           </section>
         ) : null}
 
-        {currentView === "member" ? (
+        {isViewActive(currentView, HOME_VIEW_KEYS.MEMBER) ? (
           <section className="home-panel">
             <h2>Member</h2>
             <p>
@@ -114,7 +119,7 @@ export default function Home() {
                 ? `Selected plan: ${pendingPlan.name}`
                 : "Member dashboard remains out of scope for this header extraction batch."}
             </p>
-            <button type="button" className="home-panel__button" onClick={() => setCurrentView("home")}>
+            <button type="button" className="home-panel__button" onClick={resetToHomeView}>
               Back to Home
             </button>
           </section>
