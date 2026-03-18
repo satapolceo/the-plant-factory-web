@@ -11,6 +11,24 @@ export default function App() {
 
   useEffect(() => subscribeToSurfaceStateChanges(setSurfaceState), []);
 
+  useEffect(() => {
+    if (!isChatOpen) {
+      return undefined;
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsChatOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isChatOpen]);
+
   return (
     <div>
       {surfaceState.showWebsite ? <Home /> : null}
@@ -36,6 +54,7 @@ export default function App() {
             className={`chat-fab__button${isChatOpen ? " chat-fab__button--active" : ""}`}
             aria-expanded={isChatOpen}
             aria-controls="floating-ai-chat"
+            aria-haspopup="dialog"
             aria-label={isChatOpen ? "Close Plant Factory AI" : "Open Plant Factory AI"}
             onClick={() => setIsChatOpen((open) => !open)}
           >
