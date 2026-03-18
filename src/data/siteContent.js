@@ -170,7 +170,30 @@ const siteContent = {
       image: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       desc: "บีทรูท มิกซ์เบอร์รี่ เพิ่มพลังงาน"
     }
-  ]
+  ],
+  lab: {
+    sectionKey: "lab",
+    sectionId: "lab",
+    title: "ระบบชั้นปลูก Plant Factory",
+    paragraphs: [
+      "ทุกต้นกล้าของเราเติบโตบนชั้นปลูกแนวตั้ง (Vertical Farming) ในสภาพแวดล้อมที่ถูกควบคุมอย่างสมบูรณ์แบบด้วยเทคโนโลยี AI และ IoT ทำให้ประหยัดพื้นที่และน้ำได้ถึง 90% เมื่อเทียบกับการปลูกแบบดั้งเดิม",
+      "เราจำลองแสงอาทิตย์ด้วยหลอด LED Spectrum พิเศษที่เหมาะกับพืชแต่ละชนิด พนักงานทุกคนต้องสวมชุด Cleanroom Suit ก่อนเข้าพื้นที่ เพื่อป้องกันการปนเปื้อน ทำให้คุณมั่นใจได้ว่าผลิตภัณฑ์จาก The Plant Factory สะอาดบริสุทธิ์ถึงขีดสุด"
+    ],
+    image: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageAlt: "ชั้น Plant Factory",
+    stats: [
+      {
+        id: "pesticide",
+        value: "0%",
+        label: "การใช้ยาฆ่าแมลง"
+      },
+      {
+        id: "production-days",
+        value: "365",
+        label: "วัน/ปี ที่ผลิตได้สม่ำเสมอ"
+      }
+    ]
+  }
 };
 
 export default siteContent;

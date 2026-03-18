@@ -735,6 +735,97 @@ button {
   height: 20px;
 }
 
+.home-lab {
+  margin: 24px;
+  padding: 64px 48px;
+  overflow: hidden;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 24px;
+  background: #ffffff;
+}
+
+.home-lab__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  align-items: center;
+}
+
+.home-lab__title {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.2;
+  color: #111827;
+}
+
+.home-lab__copy {
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+.home-lab__copy p {
+  margin: 0 0 18px;
+}
+
+.home-lab__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.home-lab__stat {
+  padding-left: 16px;
+  border-left: 4px solid #2f8f2f;
+}
+
+.home-lab__stat-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.home-lab__stat-label {
+  margin: 6px 0 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.home-lab__media {
+  position: relative;
+}
+
+.home-lab__image {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.14);
+}
+
+.home-lab__shape {
+  position: absolute;
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.home-lab__shape--bottom {
+  right: -24px;
+  bottom: -24px;
+  width: 96px;
+  height: 96px;
+  background: #d7f7d7;
+}
+
+.home-lab__shape--top {
+  top: -24px;
+  left: -24px;
+  width: 128px;
+  height: 128px;
+  background: rgba(47, 143, 47, 0.12);
+}
+
 .site-header__mobile-menu {
   padding: 8px 16px 16px;
   background: #ffffff;
@@ -784,6 +875,7 @@ h2 {
 
   section,
   .home-features,
+  .home-lab,
   .home-shop,
   .home-subscriptions,
   .home-hero {
@@ -873,6 +965,22 @@ h2 {
 
   .home-shop__image-wrap {
     height: 220px;
+  }
+
+  .home-lab {
+    padding: 40px 20px;
+    border-radius: 20px;
+  }
+
+  .home-lab__grid,
+  .home-lab__stats {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .home-lab__image {
+    height: 320px;
+    border-radius: 20px;
   }
 
   .home-hero__actions {

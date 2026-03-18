@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HomeFeatures from "../components/home/HomeFeatures";
 import HomeHero from "../components/home/HomeHero";
+import HomeLab from "../components/home/HomeLab";
 import HomeShop from "../components/home/HomeShop";
 import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
@@ -151,6 +152,8 @@ export default function Home() {
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
         />
+
+        <HomeLab lab={siteContent.lab} />
       </main>
     </>
   );
