@@ -193,6 +193,26 @@ const siteContent = {
         label: "วัน/ปี ที่ผลิตได้สม่ำเสมอ"
       }
     ]
+  },
+  footer: {
+    sectionKey: "footer",
+    copyright: "© 2026 The Plant Factory. All rights reserved.",
+    links: [
+      {
+        id: "privacy-policy",
+        label: "Privacy Policy",
+        href: "#"
+      },
+      {
+        id: "terms-of-service",
+        label: "Terms of Service",
+        href: "#"
+      }
+    ],
+    adminControl: {
+      actionKey: "open-admin",
+      label: "Admin"
+    }
   }
 };
 

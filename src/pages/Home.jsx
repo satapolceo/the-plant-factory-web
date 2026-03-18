@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HomeFooter from "../components/home/HomeFooter";
 import HomeFeatures from "../components/home/HomeFeatures";
 import HomeHero from "../components/home/HomeHero";
 import HomeLab from "../components/home/HomeLab";
@@ -7,7 +8,7 @@ import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
 import siteContent from "../data/siteContent";
 
-export default function Home() {
+export default function Home({ onAdminOpen }) {
   const [cartItems, setCartItems] = useState([]);
   const [currentUser] = useState(null);
   const [currentView, setCurrentView] = useState("home");
@@ -154,6 +155,8 @@ export default function Home() {
         />
 
         <HomeLab lab={siteContent.lab} />
+
+        <HomeFooter footer={siteContent.footer} onAdminOpen={onAdminOpen} />
       </main>
     </>
   );
