@@ -84,11 +84,14 @@ function getPathCountSummary(content, paths) {
 
 function ChatPanelNav({ sections }) {
   return (
-    <nav aria-label="AI chat sections">
-      <ul>
+    <nav className="chat-panel__nav" aria-label="AI chat sections">
+      <ul className="chat-panel__nav-list">
         {sections.map((section) => (
           <li key={section.id}>
-            <a href={`#chat-section-${section.id}`}>{section.label}</a>
+            <a className="chat-panel__nav-link" href={`#chat-section-${section.id}`}>
+              <span className="chat-panel__nav-label">{section.label}</span>
+              <span className="chat-panel__nav-id">{section.id}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -100,32 +103,44 @@ function ChatFieldRow({ field, content }) {
   const value = getValueAtPath(content, field.path);
 
   return (
-    <li>
-      <strong>{field.label}</strong>
-      <div>Path: {field.path}</div>
-      <div>Preview: {renderValuePreview(field.path, value, field.preview)}</div>
+    <li className="chat-panel__field-row">
+      <div className="chat-panel__field-topline">
+        <strong className="chat-panel__field-label">{field.label}</strong>
+        <span className="chat-panel__field-preview">
+          {renderValuePreview(field.path, value, field.preview)}
+        </span>
+      </div>
+      <code className="chat-panel__field-path">{field.path}</code>
     </li>
   );
 }
 
 function ChatGroupCard({ sectionId, group, content }) {
   return (
-    <section aria-labelledby={`chat-group-${sectionId}-${group.id}`}>
-      <h4 id={`chat-group-${sectionId}-${group.id}`}>{group.label}</h4>
-      <p>{group.description}</p>
-      <p>
-        <strong>Group ID:</strong> {group.id}
-      </p>
-      <p>
-        <strong>Control Type:</strong> {group.controlType}
-      </p>
-      <p>
-        <strong>Content Domain:</strong> {group.contentDomain}
-      </p>
-      <p>
-        <strong>Path Coverage:</strong> {getPathCountSummary(content, group.contentPaths)}
-      </p>
-      <ul>
+    <section className="chat-panel__group-card" aria-labelledby={`chat-group-${sectionId}-${group.id}`}>
+      <div className="chat-panel__group-head">
+        <div>
+          <h4 className="chat-panel__group-title" id={`chat-group-${sectionId}-${group.id}`}>
+            {group.label}
+          </h4>
+          <p className="chat-panel__group-description">{group.description}</p>
+        </div>
+        <span className="chat-panel__group-type">{group.controlType}</span>
+      </div>
+
+      <div className="chat-panel__group-meta">
+        <span>
+          <strong>Group ID:</strong> {group.id}
+        </span>
+        <span>
+          <strong>Content Domain:</strong> {group.contentDomain}
+        </span>
+        <span>
+          <strong>Path Coverage:</strong> {getPathCountSummary(content, group.contentPaths)}
+        </span>
+      </div>
+
+      <ul className="chat-panel__field-list">
         {group.fields.map((field) => (
           <ChatFieldRow key={field.id} field={field} content={content} />
         ))}
@@ -136,55 +151,89 @@ function ChatGroupCard({ sectionId, group, content }) {
 
 function ChatSectionCard({ section, content }) {
   return (
-    <section aria-labelledby={`chat-section-${section.id}`}>
-      <h3 id={`chat-section-${section.id}`}>{section.label}</h3>
-      <p>{section.description}</p>
-      <p>
-        <strong>Section ID:</strong> {section.id}
-      </p>
-      <p>
-        <strong>Domain:</strong> {section.domain}
-      </p>
-      <p>
-        <strong>Mapped Paths:</strong> {section.contentPaths.join(", ")}
-      </p>
-      <p>
-        <strong>Groups:</strong> {section.groups.length}
-      </p>
+    <section className="chat-panel__section-card" aria-labelledby={`chat-section-${section.id}`}>
+      <div className="chat-panel__section-head">
+        <div>
+          <p className="chat-panel__eyebrow">{section.domain}</p>
+          <h3 className="chat-panel__section-title" id={`chat-section-${section.id}`}>
+            {section.label}
+          </h3>
+        </div>
+        <span className="chat-panel__section-id">{section.id}</span>
+      </div>
 
-      {section.groups.map((group) => (
-        <ChatGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
-      ))}
+      <p className="chat-panel__section-description">{section.description}</p>
+
+      <div className="chat-panel__meta-grid">
+        <div className="chat-panel__meta-card">
+          <span className="chat-panel__meta-label">Mapped Paths</span>
+          <span className="chat-panel__meta-value">{section.contentPaths.join(", ")}</span>
+        </div>
+        <div className="chat-panel__meta-card">
+          <span className="chat-panel__meta-label">Groups</span>
+          <span className="chat-panel__meta-value">{section.groups.length}</span>
+        </div>
+      </div>
+
+      <div className="chat-panel__group-grid">
+        {section.groups.map((group) => (
+          <ChatGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
+        ))}
+      </div>
     </section>
   );
 }
 
 export default function AIChatPanel() {
   return (
-    <div>
-      <section>
-        <h2>AI Chat Panel</h2>
-        <p>
-          Structured control map of shared AI chat configuration, provider settings, and website
-          context references.
-        </p>
-        <p>Assistant: {siteContent.aiWidget.title}</p>
-        <p>Provider: {renderValuePreview("aiWidget.provider", siteContent.aiWidget.provider, "badge")}</p>
-        <p>Mapped sections: {chatSections.length}</p>
-      </section>
+    <div className="chat-panel">
+      <div className="chat-panel__shell">
+        <section className="chat-panel__intro">
+          <p className="chat-panel__eyebrow">AI Control Surface</p>
+          <h2 className="chat-panel__title">AI Chat Panel</h2>
+          <p className="chat-panel__lead">
+            Structured control map of shared AI chat configuration, provider settings, and website
+            context references.
+          </p>
 
-      <section>
-        <h3>AI Chat Section Map</h3>
-        <p>
-          Each chat area exposes stable ids, domain references, group ids, and explicit shared
-          content paths for future control-layer integration.
-        </p>
-        <ChatPanelNav sections={chatSections} />
-      </section>
+          <div className="chat-panel__intro-meta">
+            <div className="chat-panel__intro-card">
+              <span className="chat-panel__meta-label">Assistant</span>
+              <span className="chat-panel__meta-value">{siteContent.aiWidget.title}</span>
+            </div>
+            <div className="chat-panel__intro-card">
+              <span className="chat-panel__meta-label">Provider</span>
+              <span className="chat-panel__meta-value">
+                {renderValuePreview("aiWidget.provider", siteContent.aiWidget.provider, "badge")}
+              </span>
+            </div>
+            <div className="chat-panel__intro-card">
+              <span className="chat-panel__meta-label">Mapped Sections</span>
+              <span className="chat-panel__meta-value">{chatSections.length}</span>
+            </div>
+          </div>
+        </section>
 
-      {chatSections.map((section) => (
-        <ChatSectionCard key={section.id} section={section} content={siteContent} />
-      ))}
+        <section className="chat-panel__map">
+          <div className="chat-panel__map-head">
+            <div>
+              <p className="chat-panel__eyebrow">Navigation</p>
+              <h3 className="chat-panel__map-title">AI Chat Section Map</h3>
+            </div>
+            <p className="chat-panel__map-copy">
+              Stable ids, domains, group ids, and explicit shared content paths remain visible for
+              maintainability and future control-layer integration.
+            </p>
+          </div>
+          <ChatPanelNav sections={chatSections} />
+        </section>
+
+        <div className="chat-panel__sections">
+          {chatSections.map((section) => (
+            <ChatSectionCard key={section.id} section={section} content={siteContent} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
