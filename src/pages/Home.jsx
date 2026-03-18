@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HomeHero from "../components/home/HomeHero";
 import SiteHeader from "../components/layout/SiteHeader";
 import siteContent from "../data/siteContent";
 
@@ -77,9 +78,15 @@ export default function Home() {
           </section>
         ) : null}
 
+        <HomeHero
+          hero={siteContent.hero}
+          onPrimaryAction={() => scrollToSection("subscription")}
+          onSecondaryAction={() => scrollToSection("about")}
+        />
+
         <section id="about">
-          <h1>{siteContent.heroTitle}</h1>
-          <p>{siteContent.heroSubtitle}</p>
+          <h2>{siteContent.navItems[0].label}</h2>
+          <p>This section remains in place for the upcoming Home extraction batch.</p>
         </section>
 
         <section id="subscription">
