@@ -50,6 +50,26 @@ button {
   font: inherit;
 }
 
+.site-header__brand:focus-visible,
+.site-header__icon-button:focus-visible,
+.site-header__user-button:focus-visible,
+.site-header__mobile-toggle:focus-visible,
+.site-header__nav-link:focus-visible,
+.site-header__mobile-link:focus-visible,
+.site-header__mobile-user:focus-visible,
+.home-hero__primary:focus-visible,
+.home-hero__secondary:focus-visible,
+.home-subscriptions__cta:focus-visible,
+.home-shop__cta:focus-visible,
+.home-panel__button:focus-visible,
+.home-footer__link:focus-visible,
+.home-footer__admin:focus-visible,
+.admin-panel__nav-link:focus-visible,
+.chat-panel__nav-link:focus-visible {
+  outline: 3px solid rgba(42, 116, 67, 0.2);
+  outline-offset: 3px;
+}
+
 .site-header {
   position: fixed;
   top: 0;
@@ -963,6 +983,17 @@ button {
   color: #ffffff;
 }
 
+.home-hero,
+.home-features,
+.home-subscriptions,
+.home-shop,
+.home-lab,
+.home-footer,
+.admin-panel__section-card,
+.chat-panel__section-card {
+  scroll-margin-top: 112px;
+}
+
 .site-header__mobile-menu {
   padding: 10px 18px 18px;
   background: rgba(250, 251, 247, 0.96);
@@ -997,6 +1028,11 @@ section {
   border-radius: 16px;
 }
 
+.admin-panel section,
+.chat-panel section {
+  margin: 0;
+}
+
 hr {
   display: none;
 }
@@ -1006,6 +1042,39 @@ h2 {
   margin-top: 0;
 }
 
+@media (max-width: 1080px) {
+  .home-hero__inner {
+    padding: 76px 48px 68px;
+  }
+
+  .home-features,
+  .home-subscriptions,
+  .home-shop,
+  .home-lab {
+    padding: 72px 48px;
+  }
+
+  .home-features__grid,
+  .home-subscriptions__grid,
+  .home-shop__grid,
+  .admin-panel__group-grid,
+  .chat-panel__group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-lab__grid,
+  .admin-panel__intro-meta,
+  .chat-panel__intro-meta,
+  .admin-panel__meta-grid,
+  .chat-panel__meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
 @media (max-width: 767px) {
   .site-home {
     padding: 96px 16px 28px;
@@ -1106,6 +1175,22 @@ h2 {
   .home-footer__links {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .home-footer__meta,
+  .home-footer__links,
+  .admin-panel__group-meta,
+  .chat-panel__group-meta {
+    width: 100%;
+  }
+
+  .home-footer__admin,
+  .home-footer__link,
+  .admin-panel__meta-value,
+  .chat-panel__meta-value,
+  .admin-panel__field-path,
+  .chat-panel__field-path {
+    overflow-wrap: anywhere;
   }
 
   .home-hero__actions {
@@ -1343,6 +1428,7 @@ h2 {
   font-size: 0.83rem;
   word-break: break-word;
 }
+
 
 @media (max-width: 767px) {
   .admin-panel {
@@ -1614,6 +1700,7 @@ h2 {
   word-break: break-word;
 }
 
+
 @media (max-width: 767px) {
   .chat-panel {
     margin: 18px auto 56px;
@@ -1655,3 +1742,5 @@ h2 {
     text-align: left;
   }
 }
+
+
