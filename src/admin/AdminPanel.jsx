@@ -33,13 +33,6 @@ function renderValuePreview(value) {
   return String(value);
 }
 
-function getGroupSummary(group, content) {
-  return group.contentPaths.map((path) => ({
-    path,
-    value: getValueAtPath(content, path)
-  }));
-}
-
 function AdminSectionNav({ sections }) {
   return (
     <nav aria-label="Admin sections">
@@ -54,18 +47,31 @@ function AdminSectionNav({ sections }) {
   );
 }
 
-function AdminGroupCard({ sectionId, group, content }) {
-  const rows = getGroupSummary(group, content);
+function AdminFieldRow({ field, value }) {
+  return (
+    <li>
+      <strong>{field.label}</strong>
+      : {renderValuePreview(value)}
+      <br />
+      <small>{field.path}</small>
+    </li>
+  );
+}
 
+function AdminGroupCard({ sectionId, group, content }) {
   return (
     <section aria-labelledby={`admin-group-${sectionId}-${group.id}`}>
       <h4 id={`admin-group-${sectionId}-${group.id}`}>{group.label}</h4>
       <p>{group.description}</p>
+      <p>
+        <strong>Group ID:</strong> {group.id}
+      </p>
+      <p>
+        <strong>Control Type:</strong> {group.controlType}
+      </p>
       <ul>
-        {rows.map((row) => (
-          <li key={row.path}>
-            <strong>{row.path}</strong>: {renderValuePreview(row.value)}
-          </li>
+        {group.fields.map((field) => (
+          <AdminFieldRow key={field.id} field={field} value={getValueAtPath(content, field.path)} />
         ))}
       </ul>
     </section>
@@ -86,6 +92,9 @@ function AdminSectionCard({ section, content }) {
       <p>
         <strong>Content Paths:</strong> {section.contentPaths.join(", ")}
       </p>
+      <p>
+        <strong>Group Count:</strong> {section.groups.length}
+      </p>
 
       {section.groups.map((group) => (
         <AdminGroupCard key={group.id} sectionId={section.id} group={group} content={content} />
@@ -100,8 +109,11 @@ export default function AdminPanel() {
       <section>
         <h2>Admin Panel</h2>
         <p>
-          Structured control map of shared content sections for future admin editing, API mapping,
-          and control-layer integration.
+          Internal control surface for shared website content. Access is intentionally gated and
+          this panel maps section ids, content paths, and field groups for future automation.
+        </p>
+        <p>
+          <strong>Access Mode:</strong> internal hash/query entry (`#admin` or `?panel=admin`)
         </p>
         <p>Brand: {siteContent.brandName}</p>
       </section>
@@ -109,7 +121,7 @@ export default function AdminPanel() {
       <section>
         <h3>Admin Section Map</h3>
         <p>
-          Each section now exposes stable ids, domain references, and explicit shared content
+          Each section exposes stable ids, domains, control-group ids, and concrete shared content
           paths.
         </p>
         <AdminSectionNav sections={adminSections} />
