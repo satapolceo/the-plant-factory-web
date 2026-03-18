@@ -6,8 +6,15 @@ import HomeLab from "../components/home/HomeLab";
 import HomeShop from "../components/home/HomeShop";
 import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
-import { getAdminPanelId, requestAdminAccess } from "../control/panelAccess";
-import { getDefaultHomeView, isViewActive, resolveAccountEntryView, HOME_VIEW_KEYS } from "../control/viewState";
+import {
+  closeCartAction,
+  openAccountEntryAction,
+  openAdminAction,
+  openCartAction,
+  openHomeView,
+  toggleMobileMenuAction
+} from "../control/actions";
+import { getDefaultHomeView, isViewActive, HOME_VIEW_KEYS } from "../control/viewState";
 import siteContent from "../data/siteContent";
 
 export default function Home() {
@@ -20,13 +27,12 @@ export default function Home() {
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const resetToHomeView = () => {
-    setCurrentView(getDefaultHomeView());
+  const handleOpenHomeView = (scrollToTop = false) => {
+    openHomeView({ setCurrentView, setIsMobileMenuOpen, scrollToTop });
   };
 
   const scrollToSection = (sectionId) => {
-    resetToHomeView();
-    setIsMobileMenuOpen(false);
+    handleOpenHomeView();
 
     window.setTimeout(() => {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -34,21 +40,16 @@ export default function Home() {
   };
 
   const handleLogoClick = () => {
-    resetToHomeView();
-    setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    handleOpenHomeView(true);
   };
 
   const handleUserClick = () => {
-    setIsMobileMenuOpen(false);
-    setCurrentView(resolveAccountEntryView(currentUser));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    openAccountEntryAction({ currentUser, setCurrentView, setIsMobileMenuOpen });
   };
 
   const handleSubscribeClick = (plan) => {
     setPendingPlan(plan);
-    setCurrentView(resolveAccountEntryView(currentUser));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    openAccountEntryAction({ currentUser, setCurrentView, setIsMobileMenuOpen });
   };
 
   const handleAddToCart = (product) => {
@@ -69,17 +70,11 @@ export default function Home() {
       return [...previousItems, { ...product, quantity: 1 }];
     });
 
-    setIsCartOpen(true);
+    openCartAction({ setIsCartOpen });
   };
 
   const handleAdminOpen = () => {
-    resetToHomeView();
-    setIsMobileMenuOpen(false);
-    requestAdminAccess();
-
-    window.setTimeout(() => {
-      document.getElementById(getAdminPanelId())?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+    openAdminAction({ setCurrentView, setIsMobileMenuOpen });
   };
 
   return (
@@ -92,9 +87,9 @@ export default function Home() {
         isMobileMenuOpen={isMobileMenuOpen}
         onLogoClick={handleLogoClick}
         onNavItemClick={scrollToSection}
-        onCartClick={() => setIsCartOpen(true)}
+        onCartClick={() => openCartAction({ setIsCartOpen })}
         onUserClick={handleUserClick}
-        onMobileMenuToggle={() => setIsMobileMenuOpen((open) => !open)}
+        onMobileMenuToggle={() => toggleMobileMenuAction({ setIsMobileMenuOpen })}
       />
       <main className="site-home">
         {isViewActive(currentView, HOME_VIEW_KEYS.LOGIN) ? (
@@ -105,7 +100,7 @@ export default function Home() {
                 ? `Selected plan: ${pendingPlan.name}`
                 : "Member login will connect to the full account flow in a later batch."}
             </p>
-            <button type="button" className="home-panel__button" onClick={resetToHomeView}>
+            <button type="button" className="home-panel__button" onClick={() => handleOpenHomeView()}>
               Back to Home
             </button>
           </section>
@@ -119,7 +114,7 @@ export default function Home() {
                 ? `Selected plan: ${pendingPlan.name}`
                 : "Member dashboard remains out of scope for this header extraction batch."}
             </p>
-            <button type="button" className="home-panel__button" onClick={resetToHomeView}>
+            <button type="button" className="home-panel__button" onClick={() => handleOpenHomeView()}>
               Back to Home
             </button>
           </section>
@@ -143,7 +138,7 @@ export default function Home() {
             ) : (
               <p>Your cart is currently empty.</p>
             )}
-            <button type="button" className="home-panel__button" onClick={() => setIsCartOpen(false)}>
+            <button type="button" className="home-panel__button" onClick={() => closeCartAction({ setIsCartOpen })}>
               Close Cart
             </button>
           </section>
@@ -177,3 +172,4 @@ export default function Home() {
     </>
   );
 }
+
