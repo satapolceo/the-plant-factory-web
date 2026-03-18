@@ -16,18 +16,200 @@ body {
   color: #1f2937;
 }
 
-header {
-  padding: 16px 24px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-nav strong {
-  font-size: 20px;
-}
-
 main {
-  padding: 24px;
+  padding: 112px 24px 24px;
+}
+
+button {
+  font: inherit;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 88px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.site-header__brand,
+.site-header__icon-button,
+.site-header__user-button,
+.site-header__mobile-toggle,
+.site-header__nav-link,
+.site-header__mobile-link,
+.site-header__mobile-user,
+.home-panel__button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  color: #111827;
+}
+
+.site-header__brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #d7f7d7;
+  color: #207227;
+  font-size: 0;
+  position: relative;
+}
+
+.site-header__brand-mark::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 16px 0;
+  background: currentColor;
+  transform: rotate(-25deg);
+}
+
+.site-header__brand-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.site-header__brand-accent {
+  color: #2f8f2f;
+}
+
+.site-header__desktop-actions,
+.site-header__nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.site-header__desktop-actions {
+  gap: 20px;
+}
+
+.site-header__nav-items {
+  gap: 24px;
+}
+
+.site-header__nav-link,
+.site-header__mobile-link {
+  color: #4b5563;
+  padding: 8px 0;
+  font-weight: 500;
+}
+
+.site-header__nav-link--active,
+.site-header__mobile-link--active {
+  color: #2f8f2f;
+  font-weight: 700;
+}
+
+.site-header__icon-button,
+.site-header__mobile-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #4b5563;
+}
+
+.site-header__cart-count {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #2f8f2f;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.site-header__user-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 20px;
+  border-left: 1px solid #d1d5db;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.site-header__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.site-header__mobile-toggle,
+.site-header__mobile-menu {
+  display: none;
+}
+
+.home-panel {
+  margin-top: 0;
+}
+
+.home-panel__button {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #2f8f2f;
+  color: #ffffff;
+}
+
+.site-header__mobile-menu {
+  padding: 8px 16px 16px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.site-header__mobile-link,
+.site-header__mobile-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.site-header__mobile-user {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e7eb;
+  color: #374151;
+  font-weight: 700;
 }
 
 section {
@@ -45,4 +227,32 @@ hr {
 h1,
 h2 {
   margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  main {
+    padding: 96px 16px 16px;
+  }
+
+  section {
+    margin: 16px 0;
+  }
+
+  .site-header__nav {
+    min-height: 80px;
+    padding: 0 16px;
+  }
+
+  .site-header__desktop-actions {
+    display: none;
+  }
+
+  .site-header__mobile-toggle,
+  .site-header__mobile-menu {
+    display: block;
+  }
+
+  .site-header__brand-text {
+    font-size: 1.2rem;
+  }
 }
