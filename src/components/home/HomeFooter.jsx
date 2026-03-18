@@ -13,7 +13,10 @@ export default function HomeFooter({ footer, onAdminOpen }) {
                   /
                 </span>
                 <button type="button" className="home-footer__admin" onClick={onAdminOpen}>
-                  {footer.adminControl.label}
+                  <span className="home-footer__admin-icon" aria-hidden="true">
+                    ◌
+                  </span>
+                  <span className="home-footer__admin-text">{footer.adminControl.label}</span>
                 </button>
               </>
             ) : null}

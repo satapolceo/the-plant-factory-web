@@ -181,13 +181,24 @@ function ChatSectionCard({ section, content }) {
   );
 }
 
-export default function AIChatPanel() {
+export default function AIChatPanel({ variant = "page", onClose }) {
+  const isFloating = variant === "floating";
+
   return (
-    <div className="chat-panel">
+    <div className={`chat-panel${isFloating ? " chat-panel--floating" : ""}`} id={isFloating ? "floating-ai-chat" : undefined}>
       <div className="chat-panel__shell">
         <section className="chat-panel__intro">
-          <p className="chat-panel__eyebrow">AI Control Surface</p>
-          <h2 className="chat-panel__title">AI Chat Panel</h2>
+          <div className="chat-panel__intro-topbar">
+            <div>
+              <p className="chat-panel__eyebrow">AI Control Surface</p>
+              <h2 className="chat-panel__title">AI Chat Panel</h2>
+            </div>
+            {isFloating ? (
+              <button type="button" className="chat-panel__close" onClick={onClose} aria-label="Close AI Chat">
+                ×
+              </button>
+            ) : null}
+          </div>
           <p className="chat-panel__lead">
             Structured control map of shared AI chat configuration, provider settings, and website
             context references.
