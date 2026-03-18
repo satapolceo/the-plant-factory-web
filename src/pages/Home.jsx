@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import HomeFeatures from "../components/home/HomeFeatures";
 import HomeHero from "../components/home/HomeHero";
+import HomeShop from "../components/home/HomeShop";
 import HomeSubscriptions from "../components/home/HomeSubscriptions";
 import SiteHeader from "../components/layout/SiteHeader";
 import siteContent from "../data/siteContent";
 
 export default function Home() {
-  const [cartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [currentUser] = useState(null);
   const [currentView, setCurrentView] = useState("home");
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -40,6 +41,27 @@ export default function Home() {
     setPendingPlan(plan);
     setCurrentView(currentUser ? "member" : "login");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleAddToCart = (product) => {
+    setCartItems((previousItems) => {
+      const existingItem = previousItems.find((item) => item.id === product.id);
+      const currentQuantity = existingItem?.quantity ?? 0;
+
+      if (currentQuantity >= (product.stock || 0)) {
+        return previousItems;
+      }
+
+      if (existingItem) {
+        return previousItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+
+      return [...previousItems, { ...product, quantity: 1 }];
+    });
+
+    setIsCartOpen(true);
   };
 
   return (
@@ -88,7 +110,21 @@ export default function Home() {
         {isCartOpen ? (
           <section className="home-panel">
             <h2>Cart</h2>
-            <p>Your cart is currently empty.</p>
+            {cartItems.length > 0 ? (
+              <>
+                <ul className="home-panel__list">
+                  {cartItems.map((item) => (
+                    <li key={item.id} className="home-panel__list-item">
+                      <span>{item.name}</span>
+                      <strong>x{item.quantity}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <p>Total items: {cartCount}</p>
+              </>
+            ) : (
+              <p>Your cart is currently empty.</p>
+            )}
             <button type="button" className="home-panel__button" onClick={() => setIsCartOpen(false)}>
               Close Cart
             </button>
@@ -109,10 +145,12 @@ export default function Home() {
           onSelectPlan={handleSubscribeClick}
         />
 
-        <section id="shop">
-          <h2>{siteContent.navItems[2].label}</h2>
-          <p>Shop content stays untouched in this batch; the header now links here correctly.</p>
-        </section>
+        <HomeShop
+          section={siteContent.shopSection}
+          products={siteContent.products}
+          cartItems={cartItems}
+          onAddToCart={handleAddToCart}
+        />
       </main>
     </>
   );

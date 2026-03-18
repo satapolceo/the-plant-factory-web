@@ -103,6 +103,73 @@ const siteContent = {
       ],
       ctaLabel: "สมัครแพ็กเกจนี้"
     }
+  ],
+  shopSection: {
+    sectionKey: "shop",
+    sectionId: "shop",
+    title: "สั่งซื้อสินค้าออนไลน์",
+    subtitle: "ผักสลัดพรีเมียมและน้ำผลไม้สกัดเย็น ส่งตรงจากฟาร์ม",
+    outOfStockBadge: "Out of Stock",
+    outOfStockText: "สินค้าหมด",
+    addToCartLabel: "เพิ่มลงตะกร้า",
+    stockPrefix: "เหลือ",
+    stockSuffix: "ชิ้น"
+  },
+  products: [
+    {
+      id: 1,
+      name: "Premium Mixed Salad",
+      category: "สลัดผักสด",
+      price: 120,
+      stock: 50,
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "ผักสลัดออร์แกนิครวม ปลูกในระบบปิด 100%"
+    },
+    {
+      id: 2,
+      name: "Crispy Green Oak",
+      category: "สลัดผักสด",
+      price: 85,
+      stock: 30,
+      image: "https://images.unsplash.com/photo-1628773822503-ae4dce8d56b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "กรีนโอ๊ค กรอบ หวาน ไร้รสขม"
+    },
+    {
+      id: 3,
+      name: "Red Oak Lettuce",
+      category: "สลัดผักสด",
+      price: 85,
+      stock: 25,
+      image: "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "เรดโอ๊ค สีสวย อุดมด้วยวิตามิน"
+    },
+    {
+      id: 4,
+      name: "Detox Green Juice",
+      category: "น้ำสกัดเย็น",
+      price: 150,
+      stock: 15,
+      image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "น้ำเคล แอปเปิ้ลเขียว เซเลอรี่ สกัดเย็น"
+    },
+    {
+      id: 5,
+      name: "Glow Orange Juice",
+      category: "น้ำสกัดเย็น",
+      price: 140,
+      stock: 20,
+      image: "https://images.unsplash.com/photo-1622597467836-f3824f1c1f51?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "แครอท ส้ม ขิง สกัดเย็น บำรุงผิว"
+    },
+    {
+      id: 6,
+      name: "Beetroot Power",
+      category: "น้ำสกัดเย็น",
+      price: 150,
+      stock: 0,
+      image: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      desc: "บีทรูท มิกซ์เบอร์รี่ เพิ่มพลังงาน"
+    }
   ]
 };
 
