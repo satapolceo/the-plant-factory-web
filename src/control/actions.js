@@ -1,3 +1,12 @@
+export const ACTION_KEYS = {
+  OPEN_HOME_VIEW: "openHomeView",
+  OPEN_ACCOUNT_ENTRY: "openAccountEntryAction",
+  OPEN_ADMIN: "openAdminAction",
+  OPEN_CART: "openCartAction",
+  CLOSE_CART: "closeCartAction",
+  TOGGLE_MOBILE_MENU: "toggleMobileMenuAction"
+};
+
 import { getAdminPanelId, requestAdminAccess } from "./panelAccess";
 import { getDefaultHomeView, resolveAccountEntryView } from "./viewState";
 
