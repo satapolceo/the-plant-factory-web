@@ -66,6 +66,16 @@ export default function Home() {
     setIsCartOpen(true);
   };
 
+  const handleAdminOpen = () => {
+    setCurrentView("home");
+    setIsMobileMenuOpen(false);
+    window.location.hash = "admin";
+
+    window.setTimeout(() => {
+      document.getElementById("admin-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
   return (
     <>
       <SiteHeader
@@ -156,7 +166,7 @@ export default function Home() {
 
         <HomeLab lab={siteContent.lab} />
 
-        <HomeFooter footer={siteContent.footer} />
+        <HomeFooter footer={siteContent.footer} onAdminOpen={handleAdminOpen} />
       </main>
     </>
   );

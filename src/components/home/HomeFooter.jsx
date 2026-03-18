@@ -1,12 +1,22 @@
 import React from "react";
 
-export default function HomeFooter({ footer }) {
+export default function HomeFooter({ footer, onAdminOpen }) {
   return (
     <footer className="home-footer">
       <div className="home-footer__inner">
         <div className="home-footer__left">
           <div className="home-footer__meta">
             <p className="home-footer__copyright">{footer.copyright}</p>
+            {footer.adminControl ? (
+              <>
+                <span className="home-footer__divider" aria-hidden="true">
+                  /
+                </span>
+                <button type="button" className="home-footer__admin" onClick={onAdminOpen}>
+                  {footer.adminControl.label}
+                </button>
+              </>
+            ) : null}
           </div>
         </div>
 
