@@ -136,8 +136,17 @@ const adminSections = [
     label: "Catalog",
     description: "Commerce-oriented collections for subscriptions and products.",
     domain: "commerce",
-    contentPaths: ["subscriptions", "products"],
+    contentPaths: ["membershipPolicy", "subscriptions", "products"],
     groups: [
+      {
+        id: "membership-policy",
+        label: "Membership Point Policy",
+        description: "Canonical Point value, rounding, redemption, and source rule shared by website and AI.",
+        controlType: "policy",
+        fields: [
+          { id: "membership-policy", label: "Membership Policy", path: "membershipPolicy" }
+        ]
+      },
       {
         id: "subscription-plans",
         label: "Subscription Plans",

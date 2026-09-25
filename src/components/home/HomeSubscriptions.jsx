@@ -44,9 +44,15 @@ export default function HomeSubscriptions({ section, plans, onSelectPlan }) {
               <p className="home-subscriptions__plan-desc">{plan.desc}</p>
 
               <div className="home-subscriptions__price-row">
-                <span className="home-subscriptions__price">฿{plan.price}</span>
+                <span className="home-subscriptions__price">
+                  {new Intl.NumberFormat("en-US").format(plan.price)}
+                </span>
                 <span className="home-subscriptions__price-suffix">{section.priceSuffix}</span>
               </div>
+
+              <p className="home-subscriptions__plan-desc">
+                โบนัส +{plan.bonusRate}% • ได้รับ {plan.points} Point
+              </p>
 
               <div className="home-subscriptions__benefits-heading">สิทธิประโยชน์ที่ได้รับ:</div>
               <ul className="home-subscriptions__benefits">

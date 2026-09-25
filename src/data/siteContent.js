@@ -18,14 +18,14 @@ const siteContent = {
     badgeText: "Premium Kale & Superfoods",
     title: "ฟาร์มผักเคลระบบปิดอัจฉริยะ ส่งตรงถึงบ้านคุณ",
     subtitle:
-      "สุดยอดซูเปอร์ฟู้ด ควบคุมการปลูกด้วยเทคโนโลยีแสง LED ในระบบปิด 100% สมัครสมาชิกวันนี้ รับผักเคลสดใหม่ ปลอดสารเคมี ทุกสัปดาห์",
+      "เลือกดูแลสุขภาพได้ยืดหยุ่นขึ้นด้วยระบบสมาชิกแบบ Point — สมัครรายเดือน รับโบนัสมูลค่าตามแพ็กเกจ แล้วใช้ Point เลือกสินค้าที่พร้อมจำหน่ายได้ตามต้องการ",
     image: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=1600&q=80",
     primaryButtonText: "ดูแพ็กเกจรายเดือน (Subscription)",
     secondaryButtonText: "ทำไมต้องระบบปิด?"
   },
   heroTitle: "ฟาร์มผักเคลระบบปิดอัจฉริยะ ส่งตรงถึงบ้านคุณ",
   heroSubtitle:
-    "สุดยอดซูเปอร์ฟู้ด ควบคุมการปลูกด้วยเทคโนโลยีแสง LED ในระบบปิด 100% สมัครสมาชิกวันนี้ รับผักเคลสดใหม่ ปลอดสารเคมี ทุกสัปดาห์",
+    "เลือกดูแลสุขภาพได้ยืดหยุ่นขึ้นด้วยระบบสมาชิกแบบ Point — สมัครรายเดือน รับโบนัสมูลค่าตามแพ็กเกจ แล้วใช้ Point เลือกสินค้าที่พร้อมจำหน่ายได้ตามต้องการ",
   features: {
     title: "ทำไมต้องเลือก The Plant Factory?",
     subtitle: "เราผสานนวัตกรรมเข้ากับการเกษตร เพื่อสร้างมาตรฐานใหม่ของอาหารที่ปลอดภัยและยั่งยืน",
@@ -50,58 +50,83 @@ const siteContent = {
   subscriptionsSection: {
     sectionKey: "subscriptions",
     sectionId: "subscription",
-    eyebrow: "HOT MODEL 🔥",
-    title: "แพ็กเกจสมาชิกรายเดือน (Subscription)",
-    subtitle: "รับผักเคลและผักสลัดออร์แกนิคสดใหม่ ส่งตรงถึงหน้าบ้านคุณทุกสัปดาห์ ในราคาที่คุ้มค่ากว่า",
-    priceSuffix: "/เดือน"
+    eyebrow: "MEMBERSHIP POINTS",
+    title: "แพ็กเกจสมาชิกรายเดือนแบบ Point",
+    subtitle:
+      "ไม่มีจำนวนกล่องตายตัว — สมาชิกได้รับ Point พร้อมโบนัส 10–15% ตามแพ็กเกจ แล้วเลือกสินค้าที่ Active/พร้อมจำหน่ายได้ตามต้องการ",
+    priceSuffix: "LAK / เดือน"
+  },
+  membershipPolicy: {
+    sourceId: "MEMBERSHIP-POINTS-20260925",
+    effectiveDate: "2026-09-25",
+    currency: "LAK",
+    pointValueLak: 5000,
+    rounding: "floor",
+    roundingRule: "ROUNDDOWN",
+    fixedBoxEntitlement: false,
+    shippingIncluded: false,
+    redemptionRule: "Redeem Points against Active/available products only",
+    formula: "ROUNDDOWN((membershipFeeLak * (1 + bonusRate)) / 5000)"
   },
   subscriptions: [
     {
       id: "sub-1",
       category: "แพ็กเกจรายเดือน",
-      name: "Kale Lover Plan",
-      price: 990,
+      name: "Starter",
+      price: 999000,
+      bonusRate: 10,
+      rawShoppingValue: 1098900,
+      points: 219,
+      redeemableValue: 1095000,
       image: "https://images.unsplash.com/photo-1524546452178-5743b1f5cce0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      desc: "แพ็กเกจเริ่มต้นสำหรับคนรักผักเคล",
+      desc: "เริ่มต้นง่าย รับโบนัสมูลค่า 10% ก่อนแปลงเป็น Point",
       benefits: [
-        "ผักเคลสดพรีเมียม 1 กก. ทุกสัปดาห์",
-        "จัดส่งฟรีรอบวันหยุด (เสาร์-อาทิตย์)",
-        "สูตรอาหารพิเศษประจำสัปดาห์",
-        "ยกเลิกหรือหยุดพักแพ็กเกจได้ตลอดเวลา"
+        "รับ 219 Point ต่อเดือน",
+        "1 Point = 5,000 LAK",
+        "เลือกสินค้าที่ Active/พร้อมจำหน่ายได้ตาม Point",
+        "ไม่มีจำนวนกล่องตายตัว และเศษ Point ปัดลงเสมอ"
       ],
-      ctaLabel: "สมัครแพ็กเกจนี้"
+      ctaLabel: "สมัคร Starter"
     },
     {
       id: "sub-2",
       category: "แพ็กเกจรายเดือน",
-      name: "Family Health Plan",
-      price: 1590,
+      name: "Recommended",
+      price: 129000,
+      bonusRate: 12,
+      rawShoppingValue: 144480,
+      points: 28,
+      redeemableValue: 140000,
       image: "https://images.unsplash.com/photo-1628773822503-ae4dce8d56b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      desc: "แพ็กเกจสุดคุ้มสำหรับสุขภาพครอบครัว",
+      desc: "แพ็กเกจแนะนำ รับโบนัสมูลค่า 12% ก่อนแปลงเป็น Point",
       benefits: [
-        "สลัดรวมและผักเคล 2 กก. ทุกสัปดาห์",
-        "จัดส่งฟรีรอบวันหยุด (เสาร์-อาทิตย์)",
-        "ส่วนลด 10% สำหรับสั่งซื้อสินค้าปลีก",
-        "รับฟรีกระเป๋าเก็บความเย็น (เฉพาะเดือนแรก)"
+        "รับ 28 Point ต่อเดือน",
+        "1 Point = 5,000 LAK",
+        "เลือกสินค้าที่ Active/พร้อมจำหน่ายได้ตาม Point",
+        "ไม่มีจำนวนกล่องตายตัว และเศษ Point ปัดลงเสมอ"
       ],
       featured: true,
-      badgeText: "Best Seller / ยอดนิยม",
-      ctaLabel: "สมัครแพ็กเกจนี้"
+      badgeText: "Recommended / แนะนำ",
+      ctaLabel: "สมัคร Recommended"
     },
     {
       id: "sub-3",
       category: "แพ็กเกจรายเดือน",
-      name: "Green Detox Plan",
-      price: 1890,
+      name: "Family",
+      price: 169000,
+      bonusRate: 15,
+      rawShoppingValue: 194350,
+      points: 38,
+      redeemableValue: 190000,
       image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      desc: "แพ็กเกจเคลียร์สารพิษและทำความสะอาดร่างกาย",
+      desc: "แพ็กเกจครอบครัว รับโบนัสมูลค่า 15% ก่อนแปลงเป็น Point",
       benefits: [
-        "ผักสลัด 1 กก. พร้อมน้ำสกัดเย็น 4 ขวด/สัปดาห์",
-        "จัดส่งฟรี 2 รอบต่อสัปดาห์ (เลือกวันได้)",
-        "การดูแลโภชนาการแบบ VIP",
-        "ส่วนลด 15% สำหรับสั่งซื้อสินค้าปลีก"
+        "รับ 38 Point ต่อเดือน",
+        "1 Point = 5,000 LAK",
+        "เลือกสินค้าที่ Active/พร้อมจำหน่ายได้ตาม Point",
+        "ไม่มีจำนวนกล่องตายตัว และเศษ Point ปัดลงเสมอ"
       ],
-      ctaLabel: "สมัครแพ็กเกจนี้"
+      ctaLabel: "สมัคร Family"
     }
   ],
   shopSection: {
@@ -219,9 +244,10 @@ const siteContent = {
     provider: "gemini",
     apiKey: "",
     title: "Plant Factory AI",
-    greeting: "สวัสดีครับ มีผักหรือแพ็กเกจไหนที่อยากให้ช่วยแนะนำเป็นพิเศษไหมครับ",
+    greeting:
+      "สวัสดีครับ สนใจแพ็กเกจสมาชิก Starter, Recommended หรือ Family ไหมครับ ผมช่วยคำนวณ Point และแนะนำสินค้าที่เหมาะกับคุณได้",
     systemPrompt:
-      "คุณคือผู้ช่วย AI ของ The Plant Factory ให้คำแนะนำเรื่องผักสลัด ระบบปลูกพืช และแพ็กเกจสมาชิกอย่างกระชับ สุภาพ และเข้าใจง่าย"
+      "คุณคือ AI ของ Lao Plant Factory. ใช้กฎสมาชิก canonical MEMBERSHIP-POINTS-20260925 เท่านั้น: Starter 999,000 LAK โบนัส 10% = 219 Point; Recommended 129,000 LAK โบนัส 12% = 28 Point; Family 169,000 LAK โบนัส 15% = 38 Point. 1 Point = 5,000 LAK. สูตรคำนวณต้อง ROUNDDOWN/FLOOR เศษ Point ลงเสมอ ห้ามปัดขึ้น. ไม่มีสิทธิ์จำนวนกล่องตายตัว. Point ใช้เลือกสินค้าที่ Active/พร้อมจำหน่ายเท่านั้น. ค่าส่งแยกจาก Point ตามกฎจัดส่งปัจจุบัน. ห้ามอ้างราคาแพ็กเกจเดิม จำนวนกล่อง 6/8/10 หรือสิทธิ์กิโลกรัมแบบเก่า. ตอบสั้นก่อน สุภาพ ชัดเจน และหากข้อมูล stock/availability ไม่ยืนยัน ห้ามเดา."
   }
 };
 
